@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5000/api/v1/admin/book',
+    baseURL: import.meta.env.VITE_PUBLIC_URL ,
     // timeout: 10000,
     withCredentials: true,
     headers: { "X-Custom-Header": "foobar" },
