@@ -4,28 +4,20 @@ import { Link } from "react-router-dom";
 
 const AllBooks = () => {
     const [books, setBooks] = useState();
-    const [currentPage, setCurrentPage] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState();
     const [totalBooks, setTotalBooks] = useState();
     const [search, setSearch] = useState();
 
     useEffect(() => {
         (async () => {
-            const response = await allBookFn();
+            const response = await allBookFn(search, currentPage);
             setBooks(response.data.books);
             setCurrentPage(response.data.currentPage);
             setTotalPages(response.data.totalPages);
             setTotalBooks(response.data.totalBooks);
         })();
-    }, []);
-
-    const searchBook = async () => {
-        const response = await allBookFn(search);
-        setBooks(response.data.books);
-        setCurrentPage(response.data.currentPage);
-        setTotalPages(response.data.totalPages);
-        setTotalBooks(response.data.totalBooks);
-    };
+    }, [search, currentPage]);
 
     const deleteBook = async (id) => {
         console.log(id);
@@ -65,7 +57,7 @@ const AllBooks = () => {
                             </svg>
                         </div>
                         <input
-                            onChange={(e) => setSearch(e.target.search)}
+                            onChange={(e) => setSearch(e.target.value)}
                             value={search}
                             type="search"
                             id="default-search"
@@ -73,13 +65,6 @@ const AllBooks = () => {
                             placeholder="Search"
                             required
                         />
-                        <button
-                            type="submit"
-                            onClick={searchBook}
-                            className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                            Search
-                        </button>
                     </div>
                 </div>
 
