@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import axios from "./axios";
 
 export const addBookFn = async (name, description, publishDate, price) => {
@@ -11,12 +12,12 @@ export const addBookFn = async (name, description, publishDate, price) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        console.log(
+        toast.error(
             error?.response?.data?.message || error?.message || "Unknown error"
         );
     }
 };
-export const allBookFn = async ( search = null, page = 1, limit = 10,) => {
+export const allBookFn = async (search = null, page = 1, limit = 10) => {
     try {
         let url = `/?page=${page}&limit=${limit}`;
         if (search) {
@@ -26,7 +27,7 @@ export const allBookFn = async ( search = null, page = 1, limit = 10,) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        console.log(
+        toast.error(
             error?.response?.data?.message || error?.message || "Unknown error"
         );
     }
@@ -38,7 +39,7 @@ export const deleteBookFn = async (id) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        console.log(
+        toast.error(
             error?.response?.data?.message || error?.message || "Unknown error"
         );
     }
@@ -49,15 +50,15 @@ export const oneBookDetailsFn = async (id) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        console.log(
+        toast.error(
             error?.response?.data?.message || error?.message || "Unknown error"
         );
     }
 };
 
-export const editBooFn = async ( id, name, description, publishDate, price) => {
+export const editBookFn = async (id, name, description, publishDate, price) => {
     try {
-        const response = await axios.patch(`/:${id}`, {
+        const response = await axios.patch(`/${id}`, {
             name,
             description,
             publishDate,
@@ -66,8 +67,8 @@ export const editBooFn = async ( id, name, description, publishDate, price) => {
         return response.data;
     } catch (error) {
         console.log(error);
-        console.log(
+        toast.error(
             error?.response?.data?.message || error?.message || "Unknown error"
         );
     }
-}
+};

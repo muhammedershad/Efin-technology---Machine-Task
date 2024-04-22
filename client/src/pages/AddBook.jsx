@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { addBookFn } from "../utils/api";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [publishDate, setPublishDate] = useState();
     const [price, setPrice] = useState();
+    const navigate = useNavigate();
 
-    const addBook = () => {
-        console.log(name, description, publishDate, price)
-        const response = addBookFn(name, description, publishDate, price)
-        console.log(response)
+    const addBook = async () => {
+        const response = await addBookFn(name, description, publishDate, price);
+        if (response.success) {
+            toast.success(response.message);
+            navigate("/");
+        }
     };
     return (
         <>
+            <div>
+                <Toaster />
+            </div>
             <div className="h-full w-full justify-center align-middle p-10 flex">
                 <div className="max-w-sm mx-auto w-1/2 ">
                     <h1 className="text-white mb-4 text-xl">Add Book</h1>

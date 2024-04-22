@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { addBookFn, oneBookDetailsFn } from "../utils/api";
-import { useParams } from "react-router-dom";
+import { editBookFn, oneBookDetailsFn } from "../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 const EditBook = () => {
-    const {id} = useParams()
+    const { id } = useParams();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [publishDate, setPublishDate] = useState();
     const [price, setPrice] = useState();
-    useEffect(() => {
-        ( async () => {
-            const response = await oneBookDetailsFn(id)
-            setName(response.data.name)
-            setDescription(response.data.description)
-            setPublishDate(response.data.publishDate)
-            setPrice(response.data.price)
-        })()
-    }, [])
-    
+    const navigate = useNavigate();
 
-    const editBook = () => {
-        const response = editBooFn(name, description, publishDate, price)
-        console.log(response)
+    useEffect(() => {
+        (async () => {
+            const response = await oneBookDetailsFn(id);
+            setName(response.data.name);
+            setDescription(response.data.description);
+            setPublishDate(response.data.publishDate);
+            setPrice(response.data.price);
+        })();
+    }, []);
+
+    const editBook = async () => {
+        const response = await editBookFn(id, name, description, publishDate, price);
+        if (response.success) {
+            toast.success(response.message);
+            navigate("/");
+        }
     };
     return (
         <>
+            <div>
+                <Toaster />
+            </div>
             <div className="h-full w-full justify-center align-middle p-10 flex">
                 <div className="max-w-sm mx-auto w-1/2 ">
-                    <h1 className="text-white mb-4 text-xl">Add Book</h1>
+                    <h1 className="text-white text-center mb-4 text-xl">
+                        Edit Book
+                    </h1>
                     <div className="mb-5">
                         <label
                             htmlFor="name"
