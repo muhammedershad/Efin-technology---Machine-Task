@@ -17,7 +17,7 @@ const validateBook = (name, description, publishDate, price) => {
     }
 
     // Validate price
-    if (typeof price !== 'number' || price < 0 || isNaN(price)) {
+    if (price < 0 || !price) {
         throw createError(400, 'Please provide a valid price');
     }
 };

@@ -4,6 +4,7 @@ const BooksModel = require("../models/books");
 module.exports = {
     addBook: async (req, res, next) => {
         try {
+            console.log(req.body)
             const { name, description, publishDate, price } = req.body;
             validateBook(name, description, publishDate, price);
 
@@ -65,6 +66,7 @@ module.exports = {
     getBooks : async (req, res, next) => {
         try {
             const { page = 1, limit = 10, search } = req.query;
+            const query = {};
     
             if (search) {
                 query.$or = [
@@ -100,7 +102,7 @@ module.exports = {
 
     deleteBook: async ( req, res, next ) => {
         try {
-            const { id } = req.params.id
+            const { id } = req.params
             const deleteBook = BooksModel.findByIdAndDelete(id)
             if (deleteBook)
                 return res

@@ -1,11 +1,11 @@
 import axios from "./axios";
 
-const addBook = async (name, description, publishedDate, price) => {
+export const addBookFn = async (name, description, publishDate, price) => {
     try {
         const response = await axios.post(`/`, {
             name,
             description,
-            publishedDate,
+            publishDate,
             price,
         });
         return response.data;
@@ -16,7 +16,26 @@ const addBook = async (name, description, publishedDate, price) => {
         );
     }
 };
+export const allBookFn = async () => {
+    try {
+        const response = await axios.get(`/?page=1&limit=10&search=`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        console.log(
+            error?.response?.data?.message || error?.message || "Unknown error"
+        );
+    }
+};
 
-export default {
-    addBook,
+export const deleteBookFn = async (id) => {
+    try {
+        const response = await axios.delete(`/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        console.log(
+            error?.response?.data?.message || error?.message || "Unknown error"
+        );
+    }
 };

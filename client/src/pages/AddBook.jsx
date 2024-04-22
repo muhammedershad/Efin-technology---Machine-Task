@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from '../utils/api'
+import { addBookFn } from "../utils/api";
 
 const AddBook = () => {
     const [name, setName] = useState("");
@@ -8,8 +8,8 @@ const AddBook = () => {
     const [price, setPrice] = useState();
 
     const addBook = () => {
-        console.log(name, description, publishDate, price);
-        const response = api.addBook(name, description, publishDate, price)
+        console.log(name, description, publishDate, price)
+        const response = addBookFn(name, description, publishDate, price)
         console.log(response)
     };
     return (
