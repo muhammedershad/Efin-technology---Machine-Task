@@ -14,6 +14,7 @@ connect()
 
 app.use(bodyParser.json());
 app.use(express.json());
+console.log(process.env.CLIENT_URL, 'client')
 const corsOptions = {
     origin: process.env.CLIENT_URL,
     methods: 'GET,POST,OPTIONS,PUT,PATCH,DELETE',
