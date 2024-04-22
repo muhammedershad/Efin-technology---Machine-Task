@@ -1,7 +1,7 @@
 
 const Spinner = () => {
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
+    <div className='w-full h-full flex justify-center items-center'>
         <span className="loader"></span>
     </div>
   )
