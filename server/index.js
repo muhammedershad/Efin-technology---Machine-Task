@@ -4,6 +4,7 @@ const connect = require('./models/config')
 const bookRoutes = require('./routes/books')
 const errorHandling = require('./middleware/errorMiddleware')
 const cors = require('cors');
+require("dotenv").config();
 
 
 const app = express();
@@ -14,7 +15,7 @@ connect()
 app.use(bodyParser.json());
 app.use(express.json());
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: process.env.CLIENT_URL,
     methods: 'GET,POST,OPTIONS,PUT,PATCH,DELETE',
     credentials: true
 };
