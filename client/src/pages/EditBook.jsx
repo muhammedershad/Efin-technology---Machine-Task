@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { addBookFn } from "../utils/api";
+import { addBookFn, oneBookDetailsFn } from "../utils/api";
 import { useParams } from "react-router-dom";
 
 const EditBook = () => {
     const {id} = useParams()
-    useEffect(() => {
-        ( async () => {
-            const response = oneBookDetailsFn(id)
-        })()
-    }, [])
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [publishDate, setPublishDate] = useState();
     const [price, setPrice] = useState();
+    useEffect(() => {
+        ( async () => {
+            const response = await oneBookDetailsFn(id)
+            setName(response.data.name)
+            setDescription(response.data.description)
+            setPublishDate(response.data.publishDate)
+            setPrice(response.data.price)
+        })()
+    }, [])
+    
 
-    const addBook = () => {
-        console.log(name, description, publishDate, price)
-        const response = addBookFn(name, description, publishDate, price)
+    const editBook = () => {
+        const response = editBooFn(name, description, publishDate, price)
         console.log(response)
     };
     return (
@@ -78,7 +82,7 @@ const EditBook = () => {
                                 </svg>
                             </div>
                             <input
-                                datepicker
+                                defaultValue={new Date(publishDate)}
                                 type="date"
                                 value={publishDate}
                                 onChange={(e) => setPublishDate(e.target.value)}
@@ -106,7 +110,7 @@ const EditBook = () => {
                         />
                     </div>
                     <button
-                        onClick={addBook}
+                        onClick={editBook}
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                         Submit

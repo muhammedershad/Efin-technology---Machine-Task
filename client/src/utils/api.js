@@ -50,3 +50,20 @@ export const oneBookDetailsFn = async (id) => {
         );
     }
 };
+
+export const editBooFn = async ( id, name, description, publishDate, price) => {
+    try {
+        const response = await axios.patch(`/:${id}`, {
+            name,
+            description,
+            publishDate,
+            price,
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        console.log(
+            error?.response?.data?.message || error?.message || "Unknown error"
+        );
+    }
+}
