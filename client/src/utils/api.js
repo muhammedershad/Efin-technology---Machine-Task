@@ -39,3 +39,14 @@ export const deleteBookFn = async (id) => {
         );
     }
 };
+export const oneBookDetailsFn = async (id) => {
+    try {
+        const response = await axios.get(`/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        console.log(
+            error?.response?.data?.message || error?.message || "Unknown error"
+        );
+    }
+};

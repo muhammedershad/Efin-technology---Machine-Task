@@ -100,21 +100,38 @@ module.exports = {
         }
     },
 
-    deleteBook: async ( req, res, next ) => {
+    deleteBook: async (req, res, next) => {
         try {
-            const { id } = req.params
-            const deleteBook = BooksModel.findByIdAndDelete(id)
-            if (deleteBook)
-                return res
-                    .status(200)
-                    .json({
-                        success: true,
-                        message: "Book deleted",
-                    });
-            else throw createError(400, "Error in deleting book");
+            const { id } = req.params;
+            const deletedBook = await BooksModel.findByIdAndDelete(id);
+            if (deletedBook) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Book deleted",
+                });
+            } else {
+                throw createError(404, "Book not found");
+            }
         } catch (error) {
-            next(error)
+            next(error);
+        }
+    },
+    
+    bookDetails: async (req, res, next ) => {
+        try {
+            const { id } = req.params;
+            const book = await BooksModel.findById(id);
+            if (book) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Book data fetched",
+                    data: book
+                });
+            } else {
+                throw createError(404, "Book not found");
+            }
+        } catch (error) {
+            throw createError(404, "Book not found");
         }
     }
-    
 };

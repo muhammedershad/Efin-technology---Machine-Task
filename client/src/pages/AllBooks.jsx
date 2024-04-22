@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { allBookFn, deleteBookFn } from "../utils/api";
+import { Link } from "react-router-dom";
 
 const AllBooks = () => {
     const [books, setBooks] = useState();
+    const [currentPage, setCurrentPage] = useState()
+    const [totalPages, setTotalPages] = useState()
+    const [totalBooks, setTotalBooks] = useState()
     useEffect(() => {
         (async () => {
             const response = await allBookFn();
             setBooks(response.data.books);
+            setCurrentPage(response.data.currentPage)
+            setTotalPages(response.data.totalPages)
+            setTotalBooks(response.data.totalBooks)
         })();
     }, []);
 
@@ -21,6 +28,7 @@ const AllBooks = () => {
                 <h1 className="text-white text-xl text-center mb-5">
                     All Books
                 </h1>
+                
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -59,9 +67,10 @@ const AllBooks = () => {
 
                                 <td className="px-6 py-4">{book.price}</td>
                                 <td className="px-6 py-4">
+                                    <Link to={`/edit-book/${book._id}`}>
                                     <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                         Edit
-                                    </a>
+                                    </a></Link>
                                 </td>
                                 <td className="px-6 py-4">
                                     <a
@@ -80,11 +89,11 @@ const AllBooks = () => {
                     <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                         Showing{" "}
                         <span className="font-semibold text-gray-900 dark:text-white">
-                            1-10
+                            1- {totalBooks}
                         </span>{" "}
                         of{" "}
                         <span className="font-semibold text-gray-900 dark:text-white">
-                            1000
+                            {totalBooks}
                         </span>
                     </span>
                     <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
@@ -104,39 +113,7 @@ const AllBooks = () => {
                                 1
                             </a>
                         </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                                2
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                aria-current="page"
-                                className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                            >
-                                3
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                                4
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                            >
-                                5
-                            </a>
-                        </li>
+                        
                         <li>
                             <a
                                 href="#"
