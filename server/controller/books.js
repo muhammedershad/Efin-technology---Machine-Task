@@ -62,4 +62,42 @@ module.exports = {
             next(error);
         }
     },
+
+    getBooks : async (req, res, next) => {
+        try {
+            const { page = 1, limit = 10, search } = req.query;
+            const query = {};
+    
+            if (search) {
+                query.$or = [
+                    { name: { $regex: search, $options: 'i' } },
+                    { description: { $regex: search, $options: 'i' } }
+                ];
+            }
+    
+            const skip = (page - 1) * limit;
+    
+            const books = await BooksModel.find(query)
+                .skip(skip)
+                .limit(limit);
+    
+            const totalBooks = await BooksModel.countDocuments(query);
+    
+            const totalPages = Math.ceil(totalBooks / limit);
+    
+            res.status(200).json({
+                success: true,
+                message: 'Books retrieved successfully',
+                data: {
+                    books,
+                    currentPage: page,
+                    totalPages,
+                    totalBooks
+                }
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+    
 };
