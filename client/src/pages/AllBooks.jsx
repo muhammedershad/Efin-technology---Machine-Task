@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { allBookFn, deleteBookFn } from "../utils/api";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
@@ -149,7 +149,7 @@ const AllBooks = () => {
                         </thead>
                         <tbody>
                             {books?.map((book) => (
-                                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr key={book._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th
                                         scope="row"
                                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
