@@ -16,9 +16,13 @@ export const addBookFn = async (name, description, publishDate, price) => {
         );
     }
 };
-export const allBookFn = async ( search, page = 1, limit = 10,) => {
+export const allBookFn = async ( search = null, page = 1, limit = 10,) => {
     try {
-        const response = await axios.get(`/?page=${page}&limit=${limit}&search=${search}`);
+        let url = `/?page=${page}&limit=${limit}`;
+        if (search) {
+            url += `&search=${search}`;
+        }
+        const response = await axios.get(url);
         return response.data;
     } catch (error) {
         console.log(error);
