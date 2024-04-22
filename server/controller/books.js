@@ -15,7 +15,6 @@ module.exports = {
             });
             const addNewBook = await book.save();
 
-            console.log(addNewBook);
 
             if (addNewBook)
                 return res
@@ -66,7 +65,6 @@ module.exports = {
     getBooks : async (req, res, next) => {
         try {
             const { page = 1, limit = 10, search } = req.query;
-            const query = {};
     
             if (search) {
                 query.$or = [
@@ -97,6 +95,23 @@ module.exports = {
             });
         } catch (error) {
             next(error);
+        }
+    },
+
+    deleteBook: async ( req, res, next ) => {
+        try {
+            const { id } = req.params.id
+            const deleteBook = BooksModel.findByIdAndDelete(id)
+            if (deleteBook)
+                return res
+                    .status(200)
+                    .json({
+                        success: true,
+                        message: "Book deleted",
+                    });
+            else throw createError(400, "Error in deleting book");
+        } catch (error) {
+            next(error)
         }
     }
     
